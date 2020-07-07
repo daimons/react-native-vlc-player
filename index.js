@@ -169,19 +169,19 @@ class VlcPlayer extends Component {
   };
 
   _handleOverlay = () => {
-    const { overlayTimeout } = this.state
-    if(!overlayTimeout) {
-      this.changeOverlay()
-    } else {
-      clearInterval(overlayTimeout)
-      this.setState({
-        overlay: {
-          opacity        : 0,
-          backgroundColor: 'transparent'
-        },
-        overlayTimeout: null
-      })
-    }
+    // const { overlayTimeout } = this.state
+    // if(!overlayTimeout) {
+    //   this.changeOverlay()
+    // } else {
+    //   clearInterval(overlayTimeout)
+    //   this.setState({
+    //     overlay: {
+    //       opacity        : 0,
+    //       backgroundColor: 'transparent'
+    //     },
+    //     overlayTimeout: null
+    //   })
+    // }
   };
 
   _handleOrientation = () => {
