@@ -73,7 +73,9 @@ class VlcPlayer extends Component {
   }
 
   componentDidMount() {
-    DeviceOrientation.addOrientationListener(this._orientationDidChange)
+    DeviceOrientation.HideNavigationBar();
+    DeviceOrientation.lockToPortrait();
+    // DeviceOrientation.addOrientationListener(this._orientationDidChange)
   }
 
   _orientationDidChange = orientation => {
@@ -122,27 +124,32 @@ class VlcPlayer extends Component {
   };
 
   render() {
-    const { forwardRef, style, ...rest  } = this.props
-    const { overlay, controls, width, height } = this.state
+    const { forwardRef, style, ...rest } = this.props;
+    const { overlay, controls, width, height } = this.state;
 
-    const props = JSON.parse(JSON.stringify(rest))
-
+    const props = JSON.parse(JSON.stringify(rest));
+    // <StatusBar hidden={this.state.hidden} />
     return (
       <Fragment>
-        <StatusBar hidden={this.state.hidden} />
         <View
           style={{
-            position: 'relative'
-          }}>
+            position: "relative",
+          }}
+        >
           <NativeVlcPlayer
             {...props}
+            onVLCPlaying = {this.props.onVLCPlaying}
+            onVLCBuffering = {
+              this.props.onVLCBuffering
+            }
             paused={controls.pause}
             ref={forwardRef}
             style={{
               ...style,
               width,
-              height
-            }} />
+              height,
+            }}
+          />
 
           <Controls
             controls={controls}
@@ -151,11 +158,11 @@ class VlcPlayer extends Component {
             onOverlay={this._handleOverlay}
             onPlay={this._handlePlay}
             overlay={overlay}
-            width={this.state.width} />
-
+            width={this.state.width}
+          />
         </View>
       </Fragment>
-    )
+    );
   }
 
   _handlePlay = () => {

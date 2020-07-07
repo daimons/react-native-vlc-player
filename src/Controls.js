@@ -31,19 +31,20 @@ export default class Controls extends Component {
             </View>
           </TouchableNativeFeedback>
 
-          <TouchableNativeFeedback
-            background={isAndroid ? TouchableNativeFeedback.SelectableBackground() : ''}
-            onPress={this._handleOrientation}>
-            <View
-              style={styles.containerToggle}>
-              <Icon color='white' name={controls.toggle} size={30} />
-            </View>
-          </TouchableNativeFeedback>
+          
         </View>
       </TouchableWithoutFeedback>
     )
   }
 
+  // <TouchableNativeFeedback
+  //           background={isAndroid ? TouchableNativeFeedback.SelectableBackground() : ''}
+  //           onPress={this._handleOrientation}>
+  //           <View
+  //             style={styles.containerToggle}>
+  //             <Icon color='white' name={controls.toggle} size={30} />
+  //           </View>
+  //         </TouchableNativeFeedback>
   _handleOverlay = () => {
     this.props.onOverlay()
   };

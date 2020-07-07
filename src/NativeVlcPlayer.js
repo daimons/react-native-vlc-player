@@ -66,6 +66,8 @@ export default class NativeVlcPlayer extends Component {
   }
 
   _onPlaying(event) {
+    console.log('onPlaying===============>');
+    console.log(this.props.onVLCPlaying);
     if(this.props.onVLCPlaying)
       this.props.onVLCPlaying(event.nativeEvent)
   }

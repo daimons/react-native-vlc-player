@@ -5,6 +5,7 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import org.videolan.libvlc.util.VLCUtil;
 import java.util.ArrayList;
 
 public class VlcPlayerView extends FrameLayout implements IVLCVout.Callback, LifecycleEventListener, MediaPlayer.EventListener {
+
+    private final String TAG = "VlcPlayerView";
 
     private boolean pausedState;
 
@@ -383,6 +386,7 @@ public class VlcPlayerView extends FrameLayout implements IVLCVout.Callback, Lif
 
     @Override
     public void onEvent(MediaPlayer.Event event) {
+
         WritableMap eventMap = Arguments.createMap();
         switch (event.type) {
             case MediaPlayer.Event.EndReached:
