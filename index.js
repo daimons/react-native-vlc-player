@@ -89,13 +89,13 @@ class VlcPlayer extends Component {
       DeviceOrientation.HideNavigationBar()
     } else {
       this.setState({
-        hidden        : false,
+        hidden        : true,
         width         : this.props.style.width,
         height        : this.props.style.height,
         toggle        : controls.toggle,
         overlayTimeout: null
       })
-      DeviceOrientation.ShowNavigationBar()
+      DeviceOrientation.HideNavigationBar()
     }
   };
 
