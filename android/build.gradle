@@ -73,7 +73,8 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation 'de.mrmaffen:vlc-android-sdk:1.9.8'
+//    implementation 'de.mrmaffen:vlc-android-sdk:1.9.8'
+    implementation 'com.butterproject:vlc-android-sdk:3.0.3'
 }
 
 def configureReactNativePom(def pom) {
