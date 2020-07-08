@@ -1,5 +1,6 @@
 package com.ghondar.vlc;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.net.Uri;
@@ -27,7 +28,7 @@ import org.videolan.libvlc.util.VLCUtil;
 
 import java.util.ArrayList;
 
-public class VlcPlayerView extends FrameLayout implements IVLCVout.Callback, LifecycleEventListener, MediaPlayer.EventListener {
+public class VlcPlayerView extends FrameLayout implements IVLCVout.OnNewVideoLayoutListener, IVLCVout.Callback, LifecycleEventListener, MediaPlayer.EventListener {
 
     private final String TAG = "VlcPlayerView";
 
@@ -109,10 +110,10 @@ public class VlcPlayerView extends FrameLayout implements IVLCVout.Callback, Lif
 
         mSurface = (SurfaceView) findViewById(R.id.vlc_surface);
         holder = mSurface.getHolder();
-        initializePlayerIfNeeded();
+        initializePlayerIfNeeded(getContext());
     }
 
-    private void initializePlayerIfNeeded() {
+    private void initializePlayerIfNeeded(Context context) {
         if (mMediaPlayer == null) {
             final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
             // Create LibVLC
@@ -137,7 +138,7 @@ public class VlcPlayerView extends FrameLayout implements IVLCVout.Callback, Lif
 
             options.add("-vv");
 
-            libvlc = new LibVLC(options);
+            libvlc = new LibVLC(context, options);
 
             holder.setKeepScreenOn(true);
 
@@ -336,8 +337,11 @@ public class VlcPlayerView extends FrameLayout implements IVLCVout.Callback, Lif
         mMediaPlayer.setVolume(volume);
     }
 
+//    void onNewVideoLayout(IVLCVout vlcVout, int width, int height,
+//                          int visibleWidth, int visibleHeight, int sarNum, int sarDen);
+
     @Override
-    public void onNewLayout(IVLCVout vout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
+    public void onNewVideoLayout(IVLCVout vout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
         if (width * height == 0) return;
 
         // store video size
@@ -356,12 +360,12 @@ public class VlcPlayerView extends FrameLayout implements IVLCVout.Callback, Lif
 
     }
 
-    @Override
-    public void onHardwareAccelerationError(IVLCVout vout) {
-        // Handle errors with hardware acceleration
-        this.releasePlayer();
-        Toast.makeText(getContext(), "Error with hardware acceleration", Toast.LENGTH_LONG).show();
-    }
+//    @Override
+//    public void onHardwareAccelerationError(IVLCVout vout) {
+//        // Handle errors with hardware acceleration
+//        this.releasePlayer();
+//        Toast.makeText(getContext(), "Error with hardware acceleration", Toast.LENGTH_LONG).show();
+//    }
 
     @Override
     public void onHostResume() {
