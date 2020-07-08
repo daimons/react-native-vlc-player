@@ -110,35 +110,34 @@ public class VlcPlayerView extends FrameLayout implements IVLCVout.OnNewVideoLay
 
         mSurface = (SurfaceView) findViewById(R.id.vlc_surface);
         holder = mSurface.getHolder();
-        initializePlayerIfNeeded(getContext());
+        initializePlayerIfNeeded();
     }
 
-    private void initializePlayerIfNeeded(Context context) {
+    private void initializePlayerIfNeeded() {
         if (mMediaPlayer == null) {
             final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
             // Create LibVLC
             ArrayList<String> options = new ArrayList<>(50);
-            int deblocking = getDeblocking(-1);
+           int deblocking = getDeblocking(-1);
 
-            int networkCaching = pref.getInt("network_caching_value", 0);
-            if (networkCaching > 60000) networkCaching = 60000;
-            else if (networkCaching < 0) networkCaching = 0;
-            options.add("--audio-time-stretch");
-            options.add("--avcodec-skiploopfilter");
-            options.add("" + deblocking);
-            options.add("--avcodec-skip-frame");
-            options.add("0");
-            options.add("--avcodec-skip-idct");
-            options.add("0");
-            options.add("--subsdec-encoding");
-            options.add("--stats");
-            if (networkCaching > 0) options.add("--network-caching=" + networkCaching);
-            options.add("--androidwindow-chroma");
-            options.add("RV32");
+           int networkCaching = pref.getInt("network_caching_value", 0);
+           if (networkCaching > 60000) networkCaching = 60000;
+           else if (networkCaching < 0) networkCaching = 0;
+           options.add("--audio-time-stretch");
+           options.add("--avcodec-skiploopfilter");
+           options.add("" + deblocking);
+           options.add("--avcodec-skip-frame");
+           options.add("0");
+           options.add("--avcodec-skip-idct");
+           options.add("0");
+           options.add("--subsdec-encoding");
+           options.add("--stats");
+           if (networkCaching > 0) options.add("--network-caching=" + networkCaching);
+           options.add("--androidwindow-chroma");
+           options.add("RV32");
 
             options.add("-vv");
-
-            libvlc = new LibVLC(context, options);
+            libvlc = new LibVLC(mThemedReactContext, options);
 
             holder.setKeepScreenOn(true);
 
